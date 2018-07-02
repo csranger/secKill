@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置SpringMVC-->
+    <!-- 1. 注册了DefaultAnnotationHandlerMapping和AnnotationMethodHandlerAdapter两个bean，
+    配置一些message converter。即解决了@Controller注解的使用前提配置 -->
+    <!-- 默认的Spring MVC已经开启了对输出样式为xml, json的读写支持，所以无需额外配置 -->
+    <mvc:annotation-driven/>
+
+    <!-- 2. web.xml中的"／"配置是的所有url请求都将被Spring MVC的DispatchServlet截取，
+    以下配置会对url筛查，静态资源将由web容器处理，不是静态资源的请求才会被DispatchServlet处理 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 3. 配置jsp视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 4. 对包进行扫描，实现注释驱动Bean定义，同时将bean自动注入容器中使用。即解决了@Controller标识的类的bean的注入和使用。 -->
+    <context:component-scan base-package="com.csranger.web" />
+
+</beans>

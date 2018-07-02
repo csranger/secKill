@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.csranger.dao.SeckillDao">
+    <!--  目的：为DAO接口方法提供sql语句配置，所以需要指出是哪个接口，所以有 namespace 属性 -->
+
+
+    <!--为第一个方法 reduceNumber 提供 sql 语句，id 就是方法名-->
+    <!-- 具体sql语句：更新数据库表 seckill 的 number 字段 -->
+    <!--所有 XML 文档中的文本均会被解析器解析。只有 CDATA 区段（CDATA section）中的文本会被解析器忽略。-->
+    <update id="reduceNumber">
+        update seckill
+        set number = number - 1
+        where seckill_id = #{seckillId}
+        and start_time <![CDATA[ <= ]]> #{killTime}
+        and end_time >= #{killTime}
+        and number > 0
+    </update>
+
+
+    <!--为第二个方法 queryById 提供 sql 语句，id 就是方法名-->
+    <select id="queryById" resultType="com.csranger.entity.Seckill" parameterType="long">
+    <!--单表查询方法，as seckillId 因为已经开启了驼峰命名规范-->
+    select seckill_id as seckillId, name, number, start_time, end_time, create_time
+    from seckill
+    where seckill_Id = #{seckillId}
+    </select>
+
+
+    <!-- limit 开始位置，检测行数  注意第一行的开始位置是0，不是1-->
+    <select id="queryAll" resultType="com.csranger.entity.Seckill">
+    select seckill_id as seckillId, name, number, start_time, end_time
+    from seckill
+    order by start_time desc
+    limit #{offset}, #{limit}
+    </select>
+
+
+</mapper>

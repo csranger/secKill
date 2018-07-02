@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.csranger.dao.SuccessKilledDao">
+    <!--  目的：为DAO接口方法提供sql语句配置，所以需要指出是哪个接口，所以有 namespace 属性 -->
+    <!-- id属性指定具体接口中的什么方法 -->
+
+    <insert id="insertSuccessKilled">
+        <!-- 如果主键冲突，正常情况下报错；这里设置 ignore 表明如果主键冲突，不报错，返回 0 -->
+        <!-- 默认插入一行的state值为－1，这里可以将其写为0 -->
+        insert ignore into success_killed(seckill_id, user_phone, state)
+        values(#{seckillId}, #{userPhone}, 0)
+    </insert>
+
+
+    <select id="queryByIdWithSeckill" resultType="com.csranger.entity.SuccessKilled" >
+        select
+        sk.seckill_id,
+        sk.user_phone,
+        sk.state state,
+        sk.create_time,
+        s.seckill_id as "seckill.seckillId",
+        s.name as "seckill.name",
+        s.number as "seckill.number",
+        s.start_time as "seckill.startTime",
+        s.end_time as "seckill.endTime",
+        s.create_time as "seckill.createTime"
+        from success_killed sk
+        inner join seckill s on sk.seckill_id = s.seckill_id
+        where sk.seckill_id = #{seckillId} and sk.user_phone = #{userPhone}
+    </select>
+
+
+    <!--
+    Mybatis帮你完成接口的实现：
+    接口方法－－－ namespace + id －－－mapper文件的sql－－－resultType－－－entity实体类
+    -->
+
+</mapper>
