@@ -7,16 +7,15 @@
 <body>
 <div class="container">
     <div class="panel panel-default text-center">
-        <div class="panel-heading">
+        <div class="pannel-heading">
             <h1>${seckill.name}</h1>
         </div>
 
         <div class="panel-body">
-            <!-- 些按钮显示 -->
             <h2 class="text-danger">
-                <!--显示time图标-->
+                <%--显示time图标--%>
                 <span class="glyphicon glyphicon-time"></span>
-                <%--展示计时面板--%>
+                <%--展示倒计时--%>
                 <span class="glyphicon" id="seckill-box"></span>
             </h2>
         </div>
@@ -44,7 +43,7 @@
 
             <div class="modal-footer">
                 <!-- 当用户填写出错时将验证信息放在span里-->
-                <span id="killPhoneMassage" class="glyphicon"></span>
+                <span id="killPhoneMessage" class="glyphicon"></span>
                 <!-- 提交按钮 -->
                 <button type="button" id="killPhoneButton" class="btn btn-success">
                     <span class="glyphicon glyphicon-phone"></span>
@@ -80,7 +79,7 @@
 
         //使用EL表达式传入参数
         seckill.detail.init({
-            seckillId : ${seckill.id},
+            seckillId : ${seckill.seckillId},
             startTime: ${seckill.startTime.time},   // 毫秒
             endTime: ${seckill.endTime.time}
 

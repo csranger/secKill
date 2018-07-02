@@ -101,6 +101,7 @@ public class SeckillController {
 
     // 获取系统时间
     @RequestMapping(value = "/time/now", method = RequestMethod.GET)
+    @ResponseBody
     public SeckillResult<Long> time() {
         Date now = new Date();     //new 时间对象基本上不会报错，所以这里没有食欲try catch 语句
         return new SeckillResult<Long>(true, now.getTime());
